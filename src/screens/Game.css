@@ -1,0 +1,70 @@
+.GameBoard {
+  display: inline-block;
+  border-radius: 3vw;
+  margin: auto;
+  background-color: rgb(46, 59, 245);
+  padding: 3vh;
+}
+
+.GameBoard-grid {
+  display: inline-block;
+  text-align: center;
+  height: 11vw;
+  width: 11vw;
+  max-height: 12vh;
+  max-width: 12vh;
+  margin: 0;
+}
+
+.GameBoard-disc {
+  display: inline-block;
+  background-color: white;
+  border-radius: 50%;
+  height: 85%;
+  width: 85%;
+  padding: 0;
+}
+
+.GameBoard-disc.empty{
+  background-color: rgb(255, 255, 255);
+}
+
+.GameBoard-disc.player_one{
+  background-color: rgb(230, 28, 28);
+}
+
+.GameBoard-disc.player_two{
+  background-color: rgb(230, 218, 54);
+}
+
+.ScoreDashboard {
+  display: flex;
+  padding: 2% 10%;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ScoreBoard {
+  width: 25%;
+  height: 30%;
+  text-align: center;
+  font-size: 1.5em;
+  border: 5px solid #fff;
+  border-radius: 4px;
+}
+
+.ScoreBoard.player_one {
+  color: rgb(230, 28, 28);
+}
+
+.ScoreBoard.player_two {
+  color: rgb(230, 218, 54);
+}
+
+.ScoreBoard.player_one.current-turn {
+  border-color: rgb(230, 28, 28);
+}
+
+.ScoreBoard.player_two.current-turn {
+  border-color: rgb(230, 218, 54);
+}
