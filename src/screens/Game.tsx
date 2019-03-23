@@ -184,7 +184,7 @@ class PureGame extends React.Component<IPureGameProps,IPureGameState> {
         });
         this.placeable = i===newHeight && !callAIMove;
         if(i===newHeight && callAIMove){
-          setTimeout(()=>{this.aiMakeAMove();},0);
+          setTimeout(()=>{this.aiMakeAMove();},100);
         }
       },(this.state.height-i)*80);
     }
