@@ -11,6 +11,9 @@ import Connect4AI from '../connect4Logic/Connect4AI';
 
 import { DiscState } from '../connect4Logic/models';
 
+import * as FontAwesome from 'react-fontawesome';
+// import FontAwesomeIcon = require('react-fontawesome');
+
 import './Game.css';
 
 interface IPureGameProps {
@@ -133,6 +136,9 @@ class PureGame extends React.Component<IPureGameProps,IPureGameState> {
             <br/>
             {this.state.humanScore}
           </div>
+          {this.state.aiTurn?
+            <FontAwesome style={{color:'#605c5c',fontSize:'2em'}} name='spinner' spin={true} stack='2x'/>:''
+          }
           <div className={this.state.aiTurn?'ScoreBoard current-turn player_two':'ScoreBoard player_two'}>
             AI
             <br/>
