@@ -29,6 +29,8 @@ interface IPureGameState {
   aiScore: number;
   humanTurn: boolean;
   aiTurn: boolean;
+  humanMoveFirst: boolean;
+  canStartNewGame: boolean;
 }
 
 class PureGame extends React.Component<IPureGameProps,IPureGameState> {
@@ -44,21 +46,27 @@ class PureGame extends React.Component<IPureGameProps,IPureGameState> {
     }
     this.moveHistory = [];
     this.placeable = true;
+
+    const humanMoveFirst = true;
+    const humanTurn = humanMoveFirst;
+    const aiTurn = !humanMoveFirst;
     
     this.state = {
       aiPlayer: DiscState.PlayerTwo,
       aiScore: 0,
-      aiTurn: false,
+      aiTurn,
       board,
+      canStartNewGame: false,
       height: HEIGHT,
+      humanMoveFirst,
       humanPlayer: DiscState.PlayerOne,
       humanScore: 0,
-      humanTurn: true,
+      humanTurn,
       width: WIDTH,
     };
   }
 
-  public resetGame = ()=>{
+  public newGame = ()=>{
     const WIDTH = 7;
     const HEIGHT = 6;
     const board = new Array(HEIGHT);
@@ -66,13 +74,23 @@ class PureGame extends React.Component<IPureGameProps,IPureGameState> {
       board[i] = new Array(WIDTH).fill(DiscState.Empty);
     }
     this.moveHistory = [];
-    this.placeable = true;
+    this.placeable = !this.state.humanMoveFirst;
+
+    const humanMoveFirst = !this.state.humanMoveFirst;
+    const humanTurn = humanMoveFirst;
+    const aiTurn = !humanMoveFirst;
     
     this.setState({
-      aiTurn: false,
+      aiTurn,
       board,
-      humanTurn: true,
+      canStartNewGame: false,
+      humanMoveFirst,
+      humanTurn
     });
+
+    if(!humanMoveFirst){
+      setTimeout(()=>{this.aiMakeAMove();},100);
+    }
   }
 
   public render() {
@@ -106,7 +124,7 @@ class PureGame extends React.Component<IPureGameProps,IPureGameState> {
       <div>
         <div>
           <NavLink exact={true} to="/" className="nav-link" activeClassName="active">Back</NavLink>
-          <button onClick={this.resetGame}>New Game</button>
+          <button onClick={this.newGame} disabled={!this.state.canStartNewGame}>New Game</button>
         </div>
 
         <div className="ScoreDashboard">
@@ -129,7 +147,7 @@ class PureGame extends React.Component<IPureGameProps,IPureGameState> {
   }
 
   private aiMakeAMove = ()=>{
-    const currentBoard = new Board(this.state.width,this.state.height,DiscState.PlayerOne,4,this.moveHistory);
+    const currentBoard = new Board(this.state.width,this.state.height,this.state.humanMoveFirst?this.state.humanPlayer:this.state.aiPlayer,4,this.moveHistory);
     if(this.checkGameOver(currentBoard)){
       return;
     }
@@ -141,7 +159,7 @@ class PureGame extends React.Component<IPureGameProps,IPureGameState> {
       aiTurn: false,
       humanTurn: true
     })
-    this.checkGameOver(new Board(this.state.width,this.state.height,DiscState.PlayerOne,4,this.moveHistory));
+    this.checkGameOver(new Board(this.state.width,this.state.height,this.state.aiPlayer,4,this.moveHistory));
     return;
   }
 
@@ -184,6 +202,7 @@ class PureGame extends React.Component<IPureGameProps,IPureGameState> {
       this.setState({
         aiScore: newAiScore,
         aiTurn: false,
+        canStartNewGame: true,
         humanScore: newHumanScore,
         humanTurn: false
       })
