@@ -19,7 +19,7 @@ class App extends React.Component {
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Connect 4</h1>
           </header> */}
-          <Router>
+          <Router basename={'/connect4'}>
             <RouterOutlet/>
           </Router>
           <footer className="App-footer">
