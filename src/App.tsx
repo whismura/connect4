@@ -23,7 +23,7 @@ class App extends React.Component {
             <RouterOutlet/>
           </Router>
           <footer className="App-footer">
-          © Copyright 2019 <a href="https://github.com/whismura" target="_blank">Whismura</a>
+          © Copyright 2019 <a href="https://github.com/whismura" target="_blank">whismura</a>
           </footer>
         </Provider>
       </div>
