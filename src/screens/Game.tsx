@@ -96,38 +96,41 @@ class PureGame extends React.Component<IPureGameProps, IPureGameState> {
   public render() {
     const constructedBoard = (
       <div className="GameBoard">
-        {this.reverseArray(this.state.board).map((row, rowIndex) => {
-          return (
-            <div
-              key={this.state.board.length - rowIndex - 1}
-              className="GameBoard-row"
-            >
-              {row.map((disc, colIndex) => {
-                let classname = "GameBoard-disc ";
-                switch (disc) {
-                  case DiscState.Empty:
-                    classname += "empty";
-                    break;
-                  case DiscState.PlayerOne:
-                    classname += "player_one";
-                    break;
-                  case DiscState.PlayerTwo:
-                    classname += "player_two";
-                    break;
-                }
-                return (
-                  <div
-                    key={colIndex}
-                    className="GameBoard-grid"
-                    onClick={this.columnClicked(colIndex)}
-                  >
-                    <div className={classname} />
-                  </div>
-                );
-              })}
-            </div>
-          );
-        })}
+        {this.state.board
+          .slice()
+          .reverse()
+          .map((row, rowIndex) => {
+            return (
+              <div
+                key={this.state.board.length - rowIndex - 1}
+                className="GameBoard-row"
+              >
+                {row.map((disc, colIndex) => {
+                  let classname = "GameBoard-disc ";
+                  switch (disc) {
+                    case DiscState.Empty:
+                      classname += "empty";
+                      break;
+                    case DiscState.PlayerOne:
+                      classname += "player_one";
+                      break;
+                    case DiscState.PlayerTwo:
+                      classname += "player_two";
+                      break;
+                  }
+                  return (
+                    <div
+                      key={colIndex}
+                      className="GameBoard-grid"
+                      onClick={this.columnClicked(colIndex)}
+                    >
+                      <div className={classname} />
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
       </div>
     );
 
@@ -290,14 +293,6 @@ class PureGame extends React.Component<IPureGameProps, IPureGameState> {
         return;
       }
     };
-  };
-
-  private reverseArray = (arr: DiscState[][]) => {
-    const newArr = [];
-    for (let i = arr.length - 1; i >= 0; i--) {
-      newArr.push(arr[i]);
-    }
-    return newArr;
   };
 
   private colHeight = (col: number) => {
