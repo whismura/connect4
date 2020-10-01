@@ -1,12 +1,12 @@
 export enum DiscState {
   Empty,
   PlayerOne,
-  PlayerTwo
+  PlayerTwo,
 }
 
 export enum ThreatState {
   None,
   PlayerOneThreat,
   PlayerTwoThreat,
-  BothPlayersThreat
+  BothPlayersThreat,
 }

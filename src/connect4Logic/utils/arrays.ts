@@ -1,18 +1,16 @@
-
 // calculate minimum, or return null if all are null
-export function arrayMin(array:any[]){
+export function arrayMin(array: any[]) {
   // if(array.length===0){
   //   console.error("array empty");
   // }
   let lowest = null;
-  for(const e of array){
-    if(e===null){
+  for (const e of array) {
+    if (e === null) {
       continue;
     }
-    if(lowest===null){
+    if (lowest === null) {
       lowest = e;
-    }
-    else if(e<lowest){
+    } else if (e < lowest) {
       lowest = e;
     }
   }
@@ -20,18 +18,18 @@ export function arrayMin(array:any[]){
 }
 
 // calculate maximum, or return null if all are null
-export function arrayMax(array:any[]){
+export function arrayMax(array: any[]) {
   // if(array.length===0){
   //   console.error("array empty");
   // }
   let highest = null;
-  for(const e of array){
-    if(e===null){
+  for (const e of array) {
+    if (e === null) {
       continue;
     }
-    if(highest===null){
+    if (highest === null) {
       highest = e;
-    } else if(e>highest){
+    } else if (e > highest) {
       highest = e;
     }
   }
@@ -39,10 +37,10 @@ export function arrayMax(array:any[]){
 }
 
 // calculate the number of a particular element appears in an array
-export function numOfThatElementIn(array:any[],element:any){
+export function numOfThatElementIn(array: any[], element: any) {
   let counter = 0;
-  for(const e of array){
-    if(e===element){
+  for (const e of array) {
+    if (e === element) {
       counter++;
     }
   }
@@ -50,10 +48,10 @@ export function numOfThatElementIn(array:any[],element:any){
 }
 
 // return those indices where array[index] === element
-export function indicesOf(array:any[],element:any){
+export function indicesOf(array: any[], element: any) {
   const resultArray = [];
-  for(let i=0;i<array.length;i++){
-    if(array[i]===element){
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === element) {
       resultArray.push(i);
     }
   }

@@ -1,4 +1,9 @@
-import { INCREMENT_LOSE_STAT, INCREMENT_TIE_STAT, INCREMENT_WIN_STAT, StatActions } from './actions';
+import {
+  INCREMENT_LOSE_STAT,
+  INCREMENT_TIE_STAT,
+  INCREMENT_WIN_STAT,
+  StatActions,
+} from "./actions";
 
 export interface IStatState {
   numLose: number;
@@ -14,7 +19,10 @@ const initialState = {
   totalGamesPlayed: 0,
 };
 
-export const reducer = (state: IStatState = initialState, action: StatActions) => {
+export const reducer = (
+  state: IStatState = initialState,
+  action: StatActions
+) => {
   switch (action.type) {
     case INCREMENT_WIN_STAT:
       return {
@@ -34,7 +42,7 @@ export const reducer = (state: IStatState = initialState, action: StatActions) =
         numTie: state.numTie + 1,
         totalGamesPlayed: state.totalGamesPlayed + 1,
       };
-            
+
     default:
       return initialState;
   }

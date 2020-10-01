@@ -1,13 +1,9 @@
-import * as React from 'react';
-// import { Route, NavLink, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
-import { Route, Switch } from 'react-router-dom';
+import * as React from "react";
+import { Route, Switch } from "react-router-dom";
 
-// import { connect } from 'react-redux';
-// import { RootState } from './redux/store';
-
-import { Game } from './screens/Game';
-import { Home } from './screens/Home';
-import { Stat } from './screens/Stat';
+import { Game } from "./screens/Game";
+import { Home } from "./screens/Home";
+import { Stat } from "./screens/Stat";
 
 export const RouterOutlet = () => {
   return (
