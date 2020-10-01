@@ -25,15 +25,15 @@
   padding: 0;
 }
 
-.GameBoard-disc.empty{
+.GameBoard-disc.empty {
   background-color: rgb(255, 255, 255);
 }
 
-.GameBoard-disc.player_one{
+.GameBoard-disc.player_one {
   background-color: rgb(230, 28, 28);
 }
 
-.GameBoard-disc.player_two{
+.GameBoard-disc.player_two {
   background-color: rgb(230, 218, 54);
 }
 
@@ -49,6 +49,8 @@
   height: 30%;
   text-align: center;
   font-size: 1.5em;
+  display: flex;
+  flex-direction: column;
   border: 5px solid #fff;
   border-radius: 4px;
 }
