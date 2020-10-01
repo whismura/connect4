@@ -1,7 +1,7 @@
 import * as React from "react";
-import { NavLink } from "react-router-dom";
-
+import * as FontAwesome from "react-fontawesome";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { IRootState } from "../redux/store";
 
 import {
@@ -12,11 +12,7 @@ import {
 
 import Board from "../connect4Logic/Board";
 import Connect4AI from "../connect4Logic/Connect4AI";
-
 import { DiscState } from "../connect4Logic/models";
-
-import * as FontAwesome from "react-fontawesome";
-// import FontAwesomeIcon = require('react-fontawesome');
 
 import "./Game.css";
 
@@ -34,10 +30,9 @@ interface IPureGameState {
   aiPlayer: DiscState.PlayerOne | DiscState.PlayerTwo;
   humanScore: number;
   aiScore: number;
-  humanTurn: boolean;
-  aiTurn: boolean;
   humanMoveFirst: boolean;
-  canStartNewGame: boolean;
+  isAiTurn: boolean;
+  isGameOver: boolean;
 }
 
 class PureGame extends React.Component<IPureGameProps, IPureGameState> {
@@ -55,20 +50,18 @@ class PureGame extends React.Component<IPureGameProps, IPureGameState> {
     this.placeable = true;
 
     const humanMoveFirst = true;
-    const humanTurn = humanMoveFirst;
-    const aiTurn = !humanMoveFirst;
+    const isAiTurn = !humanMoveFirst;
 
     this.state = {
       aiPlayer: DiscState.PlayerTwo,
       aiScore: 0,
-      aiTurn,
       board,
-      canStartNewGame: false,
       height: HEIGHT,
       humanMoveFirst,
       humanPlayer: DiscState.PlayerOne,
       humanScore: 0,
-      humanTurn,
+      isAiTurn,
+      isGameOver: false,
       width: WIDTH,
     };
   }
@@ -84,15 +77,13 @@ class PureGame extends React.Component<IPureGameProps, IPureGameState> {
     this.placeable = !this.state.humanMoveFirst;
 
     const humanMoveFirst = !this.state.humanMoveFirst;
-    const humanTurn = humanMoveFirst;
-    const aiTurn = !humanMoveFirst;
+    const isAiTurn = !humanMoveFirst;
 
     this.setState({
-      aiTurn,
       board,
-      canStartNewGame: false,
       humanMoveFirst,
-      humanTurn,
+      isAiTurn,
+      isGameOver: false,
     });
 
     if (!humanMoveFirst) {
@@ -151,43 +142,35 @@ class PureGame extends React.Component<IPureGameProps, IPureGameState> {
           >
             Back
           </NavLink>
-          <button onClick={this.newGame} disabled={!this.state.canStartNewGame}>
+          <button onClick={this.newGame} disabled={!this.state.isGameOver}>
             New Game
           </button>
         </div>
 
         <div className="ScoreDashboard">
           <div
-            className={
-              this.state.humanTurn
-                ? "ScoreBoard current-turn player_one"
-                : "ScoreBoard player_one"
-            }
+            className={`ScoreBoard ${
+              !this.state.isAiTurn && !this.state.isGameOver && "current-turn"
+            } player_one`}
           >
-            You
-            <br />
-            {this.state.humanScore}
+            <span>You</span>
+            <span>{this.state.humanScore}</span>
           </div>
-          {this.state.aiTurn ? (
+          {this.state.isAiTurn && (
             <FontAwesome
               style={{ color: "#605c5c", fontSize: "2em" }}
               name="spinner"
               spin={true}
               stack="2x"
             />
-          ) : (
-            ""
           )}
           <div
-            className={
-              this.state.aiTurn
-                ? "ScoreBoard current-turn player_two"
-                : "ScoreBoard player_two"
-            }
+            className={`ScoreBoard ${
+              this.state.isAiTurn && "current-turn"
+            } player_two`}
           >
-            AI
-            <br />
-            {this.state.aiScore}
+            <span>AI</span>
+            <span>{this.state.aiScore}</span>
           </div>
         </div>
         <div style={{ textAlign: "center" }}>{constructedBoard}</div>
@@ -210,10 +193,7 @@ class PureGame extends React.Component<IPureGameProps, IPureGameState> {
     const aiMove = ai.getMove();
     this.moveHistory.push(aiMove);
     this.discDropAnimation(aiMove, this.state.aiPlayer, false);
-    this.setState({
-      aiTurn: false,
-      humanTurn: true,
-    });
+    this.setState({ isAiTurn: false });
     this.checkGameOver(
       new Board(
         this.state.width,
@@ -272,10 +252,9 @@ class PureGame extends React.Component<IPureGameProps, IPureGameState> {
 
       this.setState({
         aiScore: newAiScore,
-        aiTurn: false,
-        canStartNewGame: true,
         humanScore: newHumanScore,
-        humanTurn: false,
+        isAiTurn: false,
+        isGameOver: true,
       });
       return true;
     } else {
@@ -304,10 +283,7 @@ class PureGame extends React.Component<IPureGameProps, IPureGameState> {
         this.placeable = true;
         return;
       }
-      this.setState({
-        aiTurn: true,
-        humanTurn: false,
-      });
+      this.setState({ isAiTurn: true });
       this.moveHistory.push(col);
       this.discDropAnimation(col, this.state.humanPlayer, true);
       if (this.checkGameOver(currentBoard)) {
